@@ -1,0 +1,62 @@
+var timeOffset=3*60*60*1000;
+
+function lancerTooltip()
+{
+
+//------------------−>creation des tooltip en fonction des noeuds
+//--------->il y a id="device"+id_noeud
+
+d3.selectAll(".node").each(function(d,i){
+
+//$(this).opentip("<div id='chiffre'></div>");
+alert($(this).attr("class"));
+});
+
+}
+
+
+//--------------------->fonction de chargement du graph
+function chargerNodeGraph(ip)
+{
+//------------chargement des donnee
+
+$.ajax({
+type:'GET',
+url:'log_ping?where={"ip":"'+ip+'"}',
+success:function(data){
+var tab=[];
+var i;
+for(i=0;i<data.length;i++)
+tab[i]={
+x:new Date(data[i].createdAt).getTime()+timeOffset,
+y:data[i].moyenne
+};
+//------------------>chargement graph
+grapher("#device"+ip,tab);
+
+}
+});
+
+}
+
+function grapher(elm,data)
+{
+//------------------>settings graph
+var opt={
+rangeSelector:{selected:1},
+title:{text:"Variation de la moyenne"},
+xAxis:{ordinal:false},
+series:[{
+name:"ipHost",
+data:data,
+tooltip:{valueDecimals:2}
+}]
+
+};
+
+//------------------>lancement graph
+
+$(elm).highcharts('StockChart',opt);
+
+
+}

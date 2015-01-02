@@ -1,0 +1,44 @@
+<!Doctype html>
+<html>
+<head>
+
+    <title>Essaie highstock</title>
+    <script src="js/jquery.js"></script>
+    <script src="js/highstock.js"></script>
+    <script src="js/dark-unica.js"></script>
+
+</head>
+<body>
+<div id="container" style="height: 400px;min-width:310px"></div>
+<script>
+$(function(){
+$.get('/log_ping?where={"ip":"10.15.254.1"}',function(data){
+
+var tab=[];
+for(var i=0;i<1000;i++) tab[i]={x:new Date(data[i].createdAt).getTime(),y:data[i].moyenne};
+
+$('#container').highcharts("StockChart",{
+
+rangeSelector : {
+selected : 1
+},
+
+title : {
+text : 'AAPL Stock Price'
+},
+
+series : [{
+name : 'AAPL',
+data : tab,
+tooltip: {
+valueDecimals: 2
+}
+}]
+})
+
+});
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<title>titre</title>
+</head>
+<body>
+
+
+<input type="hidden" id="ipVal" valeur="<%= ip %>">
+<div id="stock" style="width:100%;margin:auto"></div>
+<div id="chart" style="width:300px;height:300px"></div>
+
+<script src="/js/jquery.js"></script>
+
+<script src="/js/highstock.js"></script>
+<script src="/js/highcharts-more.js"></script>
+
+<script src="/js/dark-unica.js"></script>
+<script src="/js/dependencies/sails.io.js"></script>
+<script src="/js/bord/chart.js"></script>
+<script src="/js/bord/stock.js"></script>
+<script>
+
+//------------------->souscription à la table hote
+io.socket.get("/host",function(){
+
+console.log("connecte correctement à la table host");
+});
+
+//--------->decalage horaire
+var offsetTime=3*60*60*1000;
+
+</script>
+
+</body>
+</html>
