@@ -1,4 +1,4 @@
-
+//--------------------------------->chargement des differents modules
 var _=require("underscore");
 var ping=require("net-ping");
 var EventEmitter=require('events').EventEmitter;
@@ -12,7 +12,9 @@ setInterval(appel,60000);
 
 }
 };
-//-------------------->interroger
+
+
+//-------------------->interroger-----------------------------------
 function appel()
 {
 
@@ -21,6 +23,7 @@ var s=ping.createSession();
 Host.find({}).exec(function(err,found){
 _.each(found,function(h){
 console.log("**********************************************************************");
+if verifierIp(h.ip)
 interroger(h.ip,s);
 });
 
@@ -28,7 +31,7 @@ interroger(h.ip,s);
 
 }
 
-
+//---------------------------------------------------------------------
 
 function interroger(host,session)
 {
@@ -143,5 +146,19 @@ max:_.max(t),
 perte:(50-r)
 }
 
+}
+
+//-------------------------------−>validation des adresses IP
+function verifierIp(ip){
+
+if(/([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)/.exec(ip))
+return appartient(RegExp.$1) && appartient(RegExp.$2) && appartient(RegExp.$3) && appartient(RegExp.$4)
+return false;
+
+}
+
+function appartient(texte){
+var n=parseInt(texte);
+return n<256 && n>=0;
 }
 
