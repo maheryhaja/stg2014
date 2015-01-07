@@ -23,8 +23,7 @@ var s=ping.createSession();
 Host.find({}).exec(function(err,found){
 _.each(found,function(h){
 console.log("**********************************************************************");
-if verifierIp(h.ip)
-interroger(h.ip,s);
+if (verifierIp(h.ip)) interroger(h.ip,s);
 });
 
 });
@@ -150,7 +149,6 @@ perte:(50-r)
 
 //-------------------------------−>validation des adresses IP
 function verifierIp(ip){
-
 if(/([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)/.exec(ip))
 return appartient(RegExp.$1) && appartient(RegExp.$2) && appartient(RegExp.$3) && appartient(RegExp.$4)
 return false;
