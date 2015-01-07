@@ -50,9 +50,18 @@ console.log(s);
 
 function rappelPing(host,session,n,tab)
 {
-
+if(!(verifierIp(host))){console.log("erreur");return;}
 if(n==0)
 {
+//------------------------------------------->constatation err er
+
+if(tab.length!=50){
+//console.log("erreur,hote:"+host+" longueur du tableau:"+tab.length);
+//console.log(tab);
+interroger(host);
+}
+
+
 //----------------------------condition d'arret->transmission dans la db
 console.log("host:"+host);
 var chiffres=statistique(tab);
@@ -76,7 +85,6 @@ perte_paquet:chiffres.perte,
 min:chiffres.min,
 max:chiffres.max
 }).exec(function(){
-console.log("new created");
 });
 
 
@@ -93,14 +101,13 @@ else
 
 //------------------>si host---->regexp diso retour
 
-
+if(verifierIp(host))
 session.pingHost(host,function(error,target,sent,rcvd){
 var reprise=false;
 
 if(error){
 //console.log(error.toString()+"pour hote:"+target);
 //console.log(target);
-
 if(error.toString()=="Error: Socket closed")reprise=true;
 }
 
@@ -111,7 +118,9 @@ reached:r
 });
 
 //console.log((rcvd-sent)+"   reach "+r);
-if(reprise){interroger(target);
+if(reprise){
+if(verifierIp(target))
+interroger(target);
 console.log("reprise pour:"+target);
 }
 else
@@ -127,7 +136,7 @@ rappelPing(host,session,n-1,tab);
 
 function statistique(tab)
 {
-//console.log("Longueur du tableau:"+tab.length);
+//console.log("--------------------------------Longueur du tableau:"+tab.length);
 var t=[];
 var r=0;
 var i,s=0;
