@@ -35,6 +35,7 @@ if (verifierIp(h.ip)) interroger(h.ip,s);
 function interroger(host,session)
 {
 var t=[];
+if(verifierIp(host))
 rappelPing(host,session,50,t);
 
 }
