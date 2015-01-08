@@ -116,7 +116,7 @@ timerTooltip=setTimeout(function(){
 $("#chart").html("");
           d3.select("#chart")
 .transition().duration(800)
-.style("opacity",1.0);
+.style("opacity",1.0).style("z-index",0);
           d3.select(obj)
 		      .transition()
                   .duration(300)
@@ -149,7 +149,7 @@ img.on("dblclick",function(d){document.location="/bord/"+d.ip;});
 
         img.on("mouseout",function(){
           d3.select(this).transition().duration(700).attr({x:-16,y:-16,width:32,height:32});
-           d3.select("#chart").transition().duration(900).style("opacity",0.0);
+           d3.select("#chart").transition().duration(900).style("opacity",0.0).style("z-index",-100);
 
 		if(timerTooltip!=0)
 {

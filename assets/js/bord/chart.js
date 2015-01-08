@@ -1,7 +1,7 @@
 
 io.socket.get('/log_ping?where={"ip":"'+$("#ipVal").attr("valeur")+'"}',function(found){
 initialiserGauge(found[found.length-1]);
-
+console.log(found[found.length-1]);
 })
 
 

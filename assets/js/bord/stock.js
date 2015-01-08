@@ -2,7 +2,7 @@ $(function(){
 $.get('/log_ping?where={"ip":"'+$("#ipVal").attr("valeur")+'"}',function(data){
 var tab=[];
 for(var i=0;i<data.length;i++) tab[i]=[new Date(data[i].createdAt).getTime()+offsetTime,data[i].moyenne];
-
+//console.log(tab);
 $('#stock').highcharts('StockChart',{
  rangeSelector : {
                 selected : 1

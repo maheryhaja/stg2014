@@ -102,7 +102,7 @@ else
 
 //------------------>si host---->regexp diso retour
 
-if(verifierIp(host))
+if(verifierIp(host) && session)
 session.pingHost(host,function(error,target,sent,rcvd){
 var reprise=false;
 
