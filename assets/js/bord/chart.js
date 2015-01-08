@@ -1,6 +1,6 @@
 
 io.socket.get('/log_ping?where={"ip":"'+$("#ipVal").attr("valeur")+'"}',function(found){
-initialiserGauge(found[found.length-1].moyenne);
+initialiserGauge(found[found.length-1]);
 
 })
 
@@ -67,7 +67,7 @@ background:[{
 ///-------------------------->VALUE AXIS
 yAxis: {
             min: 0,
-            max: 800,
+            max: 1500,
 
             minorTickInterval: 'auto',
             minorTickWidth: 1,
@@ -97,17 +97,18 @@ yAxis: {
                 color: '#DDDF0D' // yellow
             }, {
                 from: 500,
-                to:800,
+                to:1500,
                 color: '#DF5353' // red
             }]
         },
 
 series: [{
             name: 'Temps de reponse',
-            data: [val],
+            data: [val.moyenne],
             tooltip: {
                 valueSuffix: ' ms'
             }
+
         }]
 
 
@@ -117,6 +118,43 @@ series: [{
 
 
 $("#chart").highcharts(opt);
+
+//-------------------------------------------->setting pour le second chart gauge min
+
+var opt2=opt;
+opt2.title={text:"GAUGE MIN"};
+opt2.series=[{name:'Temps de reponse min',data:[val.min],tooltip:{valueSuffix:'ms'}}];
+opt2.chart.events={
+load:function(){
+var graph=this;
+io.socket.on("host",function(ev){
+if(ev.data.ip==$("#ipVal").attr("valeur")){
+var point=graph.series[0].points[0];
+point.update(ev.data.min);
+
+
+}});
+}};
+$("#chart2").highcharts(opt2);
+
+//----------------------------------------->setting pour le troisieme chart gauge max
+
+
+var opt3=opt;
+opt3.title={text:"GAUGE MAX"};
+opt3.series=[{name:'Temps de reponse max',data:[val.max],tooltip:{valueSuffix:'ms'}}];
+opt3.chart.events={
+load:function(){
+var graph=this;
+io.socket.on("host",function(ev){
+if(ev.data.ip==$("#ipVal").attr("valeur")){
+var point=graph.series[0].points[0];
+point.update(ev.data.max);
+
+
+}});
+}};
+$("#chart3").highcharts(opt3);
 
 
 }
