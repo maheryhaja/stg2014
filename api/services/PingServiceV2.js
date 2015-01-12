@@ -26,7 +26,7 @@ var elm=stdout.split("\n");
 ///---------------->capture de la premiere ligne
 
 /([0-9]*) packets transmitted, ([0-9]*) received, ([0-9\.]*)% packet loss,/.exec(elm[0]);
-stat.perte_paquet=RegExp.$3;
+stat.perte_paquet=parseFloat(RegExp.$3);
 stat.statu=(stat.perte_paquet>80)?"down":"up";
 
 
