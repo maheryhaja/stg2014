@@ -1,4 +1,4 @@
-//--------------->script d'initialisatio
+//--------------->script d'initialisation
 var timerTooltip;
 
 //--------------------------------->on DOM loaded
@@ -75,6 +75,10 @@ function initialiser(){
                 .attr("x",30)
                 .attr("y", ".32em")
                 .text(function(d) { return d.names; });
+                
+                
+                
+       
 
 /////////////////////////////////////TRANSPARENT////////////////////////////////////////////////////////////////
 
@@ -107,9 +111,15 @@ function initialiser(){
 
 
 /////////////////////////////////////ANIMATION JAVASCRIPT ESSAIE ///////////////////////////////////////////////
-        img.on("mouseover",function(dat){
+        img.on("mouseover",function(dat){        
 var obj=this;
 var d=dat;
+//-------------------------------------------//
+
+
+//alert(d3.select(this).attr("stat"));
+     
+//-------------------------------------------//
 
 //-------------->tooltip à revoir
 timerTooltip=setTimeout(function(){
@@ -124,6 +134,7 @@ $("#chart").html("");
 	var off=$(obj).offset();
 	off.left+=20;off.top+=40;
 	$("#chart").offset(off);
+ 
 	//--------------->grapher le node
 $.ajax({
 type:"GET",
@@ -195,7 +206,9 @@ function lancerSocket()
                 d3.selectAll("image")
                         .attr("xlink:href",function(d,i){
                             return "http://41.188.60.35:1337/images/"+((data[i].statu=="down")?"rouge.ico":(data[i].moyenne>200?"yellow.ico":"router.ico"));
-                        });
+                        }).attr("stat",function(d,i){
+	return data[i].moyenne+'/'+data[i].min+'/'+data[i].max;			
+}); 
 
             }
 
@@ -206,6 +219,20 @@ function lancerSocket()
         io.socket.on("host",function(ev) {
 //-------------->appel a chaque mise à jour
             var data = ev.data;//-> le data eto le host vita mise a jour!!!
+            //-----------ESSAIE-------------------//
+           /* var ind;
+            for(ind=0;ind<data.length;ind++)
+           {
+           d3.selectAll("image").attr("stat",function(d,i){
+            if(data.id==d.id)
+            {
+             alert (data[i].moyenne+'/'+data[i].min+'/'+data[i].max);
+            }
+           });
+           }*/
+
+            
+            //-----------ESSAIE-------------------//
             d3.selectAll("image")
                     .attr("xlink:href",function(d,i){
                         var icone;
@@ -250,3 +277,11 @@ series:[
 
 $(elm).highcharts("StockChart",opt);
 }
+/****************ESSAIE AFFICHER MOYENNE *****************************/
+/*function afficher(data)
+{
+ var tableau=[];
+ for(var u=0;u<1000;u++) tableau[u]=data[u];
+ 
+}*/
+/*****************ESSAIE AFFICHER MOYENNE ****************************/
